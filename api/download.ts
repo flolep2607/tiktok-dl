@@ -3,7 +3,6 @@ import ow from 'ow';
 import {getProvider, Providers} from '../lib/providers';
 import {BaseProvider} from '../lib/providers/baseProvider';
 import {rotateProvider} from '../lib/rotator';
-import {ratelimitMiddleware} from '../middleware/ratelimit';
 
 const providersType = Providers.map((p) => p.resourceName());
 
@@ -40,7 +39,6 @@ export default async (req: VercelRequest, res: VercelResponse) => {
          req.body.url : req.query.url, req.method === 'POST' ?
              req.body.rotateOnError :
                 !!req.query.rotateOnError);
-    await ratelimitMiddleware(req);
     return res.status(200).json(result);
   } catch (e) {
     return res.status(400).json({
