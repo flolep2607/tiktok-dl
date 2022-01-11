@@ -1,7 +1,6 @@
 import {getRandomProvider} from '.';
 import {providerCache} from '../config';
 import {BaseProvider, ExtractedInfo} from './providers/baseProvider';
-import {client as redisClient} from './redis';
 
 /**
  * Rotate provider.
@@ -20,8 +19,6 @@ export const rotateProvider = async (
   if (provider.maintenance) {
     return await rotateProvider(getRandomProvider(), url, noCache, skipOnError);
   }
-  const cachedData = await redisClient.get(url);
-  if (!cachedData) {
     try {
       const data = await provider.fetch(url);
       if (data.error) {
@@ -48,7 +45,5 @@ export const rotateProvider = async (
         };
       }
     }
-  } else {
-    return JSON.parse(cachedData);
-  }
+
 };
