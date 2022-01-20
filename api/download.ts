@@ -8,9 +8,9 @@ const providersType = Providers.map((p) => p.resourceName());
 
 export default async (req: VercelRequest, res: VercelResponse) => {
   try {
-    ow(req.method === 'POST' ? req.body : req.query, ow.object.partialShape({
+    ow(req.body || req.query, ow.object.partialShape({
       'url': ow.string.url.validate((v) => ({
-        'validator': /^http(s?)(:\/\/)([a-z]+\.)*tiktok\.com\/(.*)?\/(.*)?$/gi
+        'validator': /^http(s?)(:\/\/)([a-z]+\.)*tiktok\.com\/(.*)$/gi
             .test(v),
         'message': 'Expected (.*).tiktok.com',
       })),
