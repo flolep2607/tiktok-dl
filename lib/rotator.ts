@@ -14,8 +14,6 @@ export const rotateProvider = async (
     provider: BaseProvider, url: string,
     noCache: boolean = false, skipOnError: boolean = true):
     Promise<ExtractedInfo & { provider: string; }> => {
-//   await redisClient.del(url);
-//   console.log(provider.resourceName());
   if (provider.maintenance) {
     return await rotateProvider(getRandomProvider(), url, noCache, skipOnError);
   }
@@ -27,12 +25,6 @@ export const rotateProvider = async (
       } else if (data.video && !data.video.urls.length) {
         return await rotateProvider(getRandomProvider(), url);
       } else {
-        if (!noCache) {
-          redisClient.set(url,
-              JSON.stringify(
-                  {...data, provider: provider.resourceName()}), 'ex',
-              providerCache);
-        }
         return {...data, provider: provider.resourceName()};
       }
     } catch (e) {
