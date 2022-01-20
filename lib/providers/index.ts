@@ -22,7 +22,7 @@ export const Providers: BaseProvider[] = [
   new TTDownloader(),
   new TTSave(), // won't work because we coudn't receive the cookie.
   new DLTikProvider(),
-  new SaveFromProvider(),
+  //new SaveFromProvider(),
   new SaveTikProvider(),
   new TikDownProvider(),
   new DownTikProvider(), // SaveTik Mirror
